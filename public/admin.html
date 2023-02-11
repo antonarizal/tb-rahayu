@@ -1,0 +1,309 @@
+<html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Admin Panel</title>
+<link rel="stylesheet" href="/plugins/fontawesome-free/css/all.min.css">
+<link rel="stylesheet" href="/assets/css/adminlte.min.css">
+<link rel="stylesheet" href="/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+<link rel="stylesheet" href="/plugins/toastr/toastr.min.css">
+<script src="/plugins/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="/assets/w2ui/w2ui.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/assets/w2ui/w2ui.min.css" />
+<script src="/plugins/sweetalert2/sweetalert2.min.js"></script>
+<script src="/plugins/toastr/toastr.min.js"></script>
+<script src="/assets/js/numeral.min.js"></script>
+<script>
+    function inputNum(input) {
+        var x = numeral(input.value).format("0,0");
+        input.value = x;
+    }
+
+    function capitalize(str) {
+        return str.toLowerCase().replace(/(?<= )[^\s]|^./g, a => a.toUpperCase());
+    }
+    toastr.options = {
+        "closeButton": true,
+        "debug": false,
+        "newestOnTop": false,
+        "progressBar": false,
+        // "positionClass": "toast-top-full-width",
+        "preventDuplicates": true,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "3000",
+        "extendedTimeOut": "1000",
+        // "showEasing": "swing",
+        // "hideEasing": "linear",
+        // "showMethod": "fadeIn",
+        // "hideMethod": "fadeOut"
+    };
+</script>
+<style>
+    .modal-header {
+        padding: 0.5rem !important;
+        padding-left: 20px !important;
+
+    }
+
+    .table-sm td,
+    .table-sm th {
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+    }
+
+    .table td,
+    .table th {
+        border: none !important;
+    }
+
+    .full-width {
+        width: 100%
+    }
+
+    .text-right {
+        text-align: right
+    }
+
+    .hide {
+        display: none !important
+    }
+
+    .text-center {
+        text-align: center !important;
+    }
+</style>
+</head>
+
+<body class="hold-transition sidebar-mini layout-fixed">
+    <div class="wrapper" style="background:#f4f6f9">
+        <nav class="main-header navbar navbar-expand navbar-dark navbar-lightblue text-sm">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
+                        <i class="fas fa-th-large"></i>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="javascript:logout()" class="nav-link">Logout</a>
+
+                </li>
+            </ul>
+        </nav>
+        <aside class="main-sidebar sidebar-dark-lightblue elevation-4">
+            <a href="/admin/panel" class="brand-link">
+                <span class="brand-text font-weight-light">DIVAPOS V3</span>
+            </a>
+            <div class="sidebar">
+
+                <nav class="mt-2">
+                    <ul class="nav nav-pills nav-sidebar flex-column nav-child-indent" data-widget="treeview"
+                        role="menu" data-accordion="false">
+
+                        <li class="nav-item">
+                            <a href="#dashboard" onClick="load('/dashboard/load','dashboard');"
+                                class="nav-link " id="nav_dashboard">
+                                <i class="fas far fa fa-tachometer-alt nav-icon"></i>
+                                <p>Dashboard </p>
+                            </a>
+                        </li>
+                        <li class="nav-item has-treeview ">
+                            <a href="javascript:void(0)" class="nav-link " id="nav_master">
+                                <i class="fas far fa fa-folder nav-icon"></i>
+                                <p>Master <i class="right fas fa-angle-left"></i></p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item ">
+                                    <a class="nav-link " href="javascript:void(0)"
+                                        onClick="load('barang','barang');" id="nav_barang">
+                                        <i class="fas far fa fa-folder nav-icon"></i>
+                                        <p>Barang</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item ">
+                                    <a class="nav-link " href="javascript:void(0)"
+                                        onClick="load('/pelanggan/load','pelanggan');" id="nav_pelanggan">
+                                        <i class="fas far fa fa-street-view nav-icon"></i>
+                                        <p>Pelanggan</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item ">
+                                    <a class="nav-link " href="javascript:void(0)"
+                                        onClick="load('/supplier/load','supplier');" id="nav_supplier">
+                                        <i class="fas far fa fa-user nav-icon"></i>
+                                        <p>Supplier</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="javascript:void(0)" onClick="load('/kasir/load','kasir');" class="nav-link "
+                                id="nav_kasir">
+                                <i class="fas far fa fa-calculator nav-icon"></i>
+                                <p>Kasir </p>
+                            </a>
+                        </li>
+                        <li class="nav-item has-treeview ">
+                            <a href="javascript:void(0)" class="nav-link " id="nav_transaksi">
+                                <i class="fas far fa fa-th nav-icon"></i>
+                                <p>Transaksi <i class="right fas fa-angle-left"></i></p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item ">
+                                    <a class="nav-link " href="javascript:void(0)"
+                                        onClick="load('/transaksi_penjualan/load','transaksi_penjualan');"
+                                        id="nav_transaksi_penjualan">
+                                        <i class="fas far far fa-circle nav-icon nav-icon"></i>
+                                        <p>Penjualan</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item ">
+                                    <a class="nav-link " href="javascript:void(0)"
+                                        onClick="load('/transaksi_piutang/load','transaksi_piutang');"
+                                        id="nav_transaksi_piutang">
+                                        <i class="fas far far fa-circle nav-icon nav-icon"></i>
+                                        <p>Piutang</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item has-treeview ">
+                            <a href="javascript:void(0)" class="nav-link " id="nav_laporan">
+                                <i class="fas far fa fa-chart-pie nav-icon"></i>
+                                <p>Laporan <i class="right fas fa-angle-left"></i></p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item ">
+                                    <a class="nav-link " href="javascript:void(0)"
+                                        onClick="load('/laporan_penjualan/load','laporan_penjualan');"
+                                        id="nav_laporan_penjualan">
+                                        <i class="fas far far fa-circle nav-icon nav-icon"></i>
+                                        <p>Penjualan</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item ">
+                                    <a class="nav-link " href="javascript:void(0)"
+                                        onClick="load('/laporan_piutang/load','laporan_piutang');"
+                                        id="nav_laporan_piutang">
+                                        <i class="fas far far fa-circle nav-icon nav-icon"></i>
+                                        <p>Piutang</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="javascript:void(0)" onClick="load('/users/load','users');" class="nav-link "
+                                id="nav_users">
+                                <i class="fas far fa fa-user nav-icon"></i>
+                                <p>Pengguna </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="javascript:void(0)" onClick="load('/pengaturan/load','pengaturan');"
+                                class="nav-link " id="nav_pengaturan">
+                                <i class="fas far fa fa-cog nav-icon"></i>
+                                <p>Pengaturan </p>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+
+
+        <div id="app"></div>
+
+        <footer class="main-footer" style="margin-top:20px">
+            <!-- <strong>Copyright &copy; 2022-2022 PT. Exrush Digital Nusantara.</strong> All rights reserved. <div
+        class="float-right d-none d-sm-inline-block">
+        <b>Version</b> 2.1.0-pre
+    </div> -->
+        </footer>
+
+        <aside class="control-sidebar control-sidebar-dark">
+            <div class="row">
+                <div class="col-md-12">
+                    Pengaturan
+                </div>
+
+            </div>
+        </aside>
+    </div>
+    <script src="/plugins/jquery-ui/jquery-ui.min.js"></script>
+    <script>
+        $.widget.bridge('uibutton', $.ui.button)
+
+        var base_url = 'http://localhost:3344/';
+        var views_url = 'http://localhost:3344/views/';
+
+        function getCookie(cname) {
+            let name = cname + "=";
+            let ca = document.cookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+
+        function checkCookie() {
+            let userLogin = getCookie("isLogin");
+            let user_id = getCookie("user_id");
+            if (userLogin == "true") {
+                // alert("Welcome again " + user_id);
+            } else {
+                // window.location.replace(base_url+"/index.php/auth/login");
+                // alert("Logout " + user_id);
+
+            }
+        }
+        checkCookie()
+
+        function load(url, id) {
+            $("#body").html("");
+            $("#app").load(views_url+url);
+            $(".nav-link").removeClass("active")
+            $(".nav-link").removeClass("highlight")
+            $("#nav_" + id).addClass("active")
+            // $.get(url,function(resp){
+            // $("#body").html(resp);
+            // // console.log(url)
+            // $(".nav-link").removeClass("active")
+            // $(".nav-link").removeClass("highlight")
+            // $("#nav_" + id).addClass("active")
+            // })
+
+        }
+        //javascript get current url    
+        function getCurrentUrl() {
+            var url = window.location.href;
+            var url_array = url.split('/');
+            var last_url = url_array[url_array.length - 1];
+            return last_url;
+        }
+        if (getCurrentUrl() == "panel") {
+            load(base_url + "/views/", "dashboard")
+        }
+
+        function logout(){
+            window.location.replace(base_url);
+        }
+    </script>
+    <script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/js/adminlte.js"></script>
+</body>
+
+</html>

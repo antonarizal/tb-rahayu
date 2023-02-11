@@ -1,0 +1,63 @@
+.modal-header {
+    padding: 0.5rem !important;
+    padding-left: 10px!important;
+
+}
+
+.table-sm td,
+.table-sm th {
+    padding-left: 20px!important;
+    padding-right: 20px!important;
+}
+.table td, .table th{
+    border : none!important;
+}
+.full-width{
+    width:100%
+}
+.text-right{
+    text-align:right
+}
+.hide{
+    display:none!important
+}
+.text-center{
+    text-align:center!important;
+}
+/* Fixed layout */
+.fixed .main-header,
+.fixed .main-sidebar,
+.fixed .left-side {
+    position: fixed;
+}
+.fixed .main-header {
+    top: 0;
+    right: 0;
+    left: 0;
+}
+.fixed .content-wrapper,
+.fixed .right-side {
+    padding-top: 50px;
+}
+@media (max-width: 767px) {
+    .fixed .content-wrapper,
+    .fixed .right-side {
+    padding-top: 100px;
+    }
+}
+.fixed.layout-boxed .wrapper {
+    max-width: 100%;
+}
+
+
+.form-input{
+    font-weight: bold;
+    font-size: 16px;
+}
+.form-input :disabled{
+    color: black;
+}
+.form-input :read-only{
+    color: black !important;
+    background: white !important;
+}

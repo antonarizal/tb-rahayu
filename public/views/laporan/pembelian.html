@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>DIVA POS :: APLIKASI PENJUALAN</title>
+    <link rel="stylesheet" href="/plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="/assets/w2ui/w2ui.min.css" />
+    <link rel="stylesheet" href="/assets/css/adminlte.min.css">
+    <link rel="stylesheet" href="/assets/css/laporan.css">
+    <style>
+        body{
+            background-color: #F4F6F9;
+        }
+        .center{
+            text-align:center;
+        }
+        p{
+            margin:1px!important;
+        }
+        hr{
+            margin-top: 5px;
+            margin-bottom: 5px;
+            color:#000 !important;
+        }
+    </style>
+</head>
+
+<body class="hold-transition layout-top-nav fixed text-sm">
+    <div class="wrapper">
+        <!-- Navbar -->
+        <nav class="main-header navbar navbar-expand-md navbar-light navbar-white ">
+            <div class="container">
+                <button class="navbar-toggler order-1" type="button" data-toggle="collapse"
+                    data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse order-3" id="navbarCollapse">
+                    <!-- Left navbar links -->
+                    <ul class="navbar-nav">
+                    </ul>
+                    <form id="post" class="form-inline ml-0 ml-md-3">
+                        <div class="input-group input-group-sm">
+                            <div class="input-group-append">
+                                <span class="btn btn-navbar">
+                                    Periode
+                                </span>
+                            </div>
+                            <select name="month" id="month"></select>
+                        </div>
+                        <div class="input-group input-group-sm">
+                            <div class="input-group-append">
+                                <span class="btn btn-navbar">
+                                    Tahun
+                                </span>
+                            </div>
+                            <select name="year" id="year"></select>
+                        </div>
+                        <span style="display: none;">
+                        <input readonly type="hidden" id="supplier_id" class="form-control-sm"
+                        style="width:50px" value="0">
+                    <input readonly type="" id="idsupp" class="form-control-sm"
+                        style="width:50px" value="0">
+                    <input readonly type="text" id="nama_supplier" class="form-control-sm"
+                        style="width:200px;margin-left:1px" placeholder="Nama Supplier">
+                        <a href="javascript:openSupplier()" class="btn  btn-default"><i
+                            class="fa fa-user"></i> </a>  
+                        </span>
+                <span style="margin:5px 10px"> Status : </span><select name="pembayaran"
+                    style="margin-top:3px;margin-left:5px;padding:3px;height:29px" id="pembayaran">
+                    <option value="Semua">Semua</option>
+                    <option value="Cash">Cash</option>
+                    <option value="Hutang">Hutang</option>
+                    <option value="Lunas">Lunas</option>
+                </select>
+                        <input type="submit" name="" class="btn btn-primary btn-sm" value="Tampilkan">
+                    </form>
+                </div>
+                <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
+                    <li class="nav-item dropdown">
+                        <button class="btn btn-sm btn-primary" onclick="printLaporan()">Cetak Laporan</button>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="content-wrapper">
+            <div class="content-header">
+                <div class="container">
+                </div>
+            </div>
+            <div class="content">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-body">
+                                <div id="cetak">
+                                    <h5 id="title" class="center">Laporan Pembelian<p id="periode"></p></h5>
+                                    <p id="toko"></p>
+                                    <p class="card-text">
+                                        
+                                        <p id="tanggal"></p>
+                                        <br>
+                                    </p>
+                                    <table id="laporan" class="table table-bordered table-hover text-sm table-sm">
+                                        <thead>
+                                            <tr>
+                                                <th>No</th>
+                                                <th>Tanggal</th>
+                                                <th>Jatuh Tempo</th>
+                                                <th>Tgl Bayar</th>
+                                                <th>Nota</th>
+                                                <th>Supplier</th>
+                                                <th>Pembayaran</th>
+                                                <th>Pembelian</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                        
+                                        <tfoot>
+                                            <tr>
+                                                <th colspan="7">Total</th>
+                                                <th><span id="total" class="float-right"></span></th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        window.$ = window.jQuery = require('jquery');
+    </script>
+    
+    <script src="/assets/js/localdb.min.js"></script>
+    <script src="/assets/js/tanggal.js"></script>
+    <script src="/assets/js/jQuery.print.js"></script>
+    <script src="/assets/w2ui/w2ui.min.js"></script>
+    <script src="/helper/laporan/pembelian.js"></script>
+
+    
+</body>
+</html>

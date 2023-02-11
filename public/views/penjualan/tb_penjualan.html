@@ -1,0 +1,111 @@
+<html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DIVA POS :: APLIKASI PENJUALAN</title>
+<link rel="stylesheet" href="/plugins/fontawesome-free/css/all.min.css">
+<link rel="stylesheet" href="/assets/css/adminlte.min.css">
+<link rel="stylesheet" href="/assets/w2ui/w2ui.min.css" />
+<link rel="stylesheet" href="/assets/css/global.css" />
+<style>
+ .w2field{
+     width:200px
+ }
+ .table-header {
+        font-size: 14px;
+        font-weight: bold;
+        color: rgb(70, 69, 69);
+
+    }
+    .form-input{
+        font-weight: bold;
+        font-size: 16px;
+    }
+</style>
+<div class="wrapper">
+    <div class="content-header" style="padding:10px;">
+    </div>
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    
+                    <h3>PENJUALAN BARANG</h3>
+
+                    <div class="card">
+                    <div class="card-body bg-info">
+                    <div class="input-group" style="width: 100%">
+                        <form>
+
+                            <input class="form-control-sm" id="tgl_mulai" style="width:200px;margin-left:10px"
+                                name="date" type="date" autocomplete="off" /> s/d 
+                                <input class="form-control-sm" id="tgl_selesai" style="width:200px;margin-left:10px"
+                                name="date" type="date" autocomplete="off" /> 
+                            <input readonly type="" id="idcustomer" class="form-control-sm form-input"
+                                style="width:50px" value="0">
+                            <input readonly type="text" id="nama_pelanggan" class="form-control-sm form-input"
+                                style="width:200px;margin-left:1px" placeholder="Nama Customer">
+                                <a href="javascript:openPelanggan()" class="btn  btn-default"><i
+                                    class="fa fa-user"></i> </a>  
+                        <span style="margin:5px 10px"> Status : </span><select name="pembayaran"
+                            style="margin-top:3px;margin-left:5px;padding:3px;height:29px" id="pembayaran">
+                            <option value="Semua">Semua</option>
+                            <option value="Cash">Cash</option>
+                            <option value="Hutang">Hutang</option>
+                            <option value="Lunas">Lunas</option>
+                        </select>
+                        <a href="javascript:void(0)" id="tampilkan" class="btn  btn-default"><i
+                            class="fa fa-check"></i> Tampilkan</a>
+                            <a href="" class="btn  btn-default"><i
+                                class="fa fa-spinner"></i> Refresh</a>
+                        </form>
+
+                    </div>
+                    </div>
+                    </div>
+                    
+                    <div id="grid" style="width: 100%; min-height: 450px;overflow:hidden"></div>
+
+                    <table class="table table-sm">
+                        <tr>
+                            <td style="text-align:right">
+                                Total Penjualan 
+                            </td>
+                            <td style="text-align:right;width:300px;">
+                                <input type="text" class="form-control-sm form-input" style="float:right;text-align: right;font-size: 20px;" id="totalPenjualan"> 
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:right">
+                                Total Pembelian 
+                            </td>
+                            <td style="text-align:right;width:300px;">
+                                <input type="text" class="form-control-sm form-input" style="float:right;text-align: right;font-size: 20px;" id="totalPembelian"> 
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:right">
+                                Margin / Laba 
+                            </td>
+                            <td style="text-align:right;width:300px;">
+                                <input type="text" class="form-control-sm form-input" style="float:right;text-align: right;font-size: 20px;" id="margin"> 
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script>
+    window.$ = window.jQuery = require('jquery');
+</script>
+<script src="/assets/js/tanggal.js"></script>
+<script src="/assets/js/localdb.min.js"></script>
+<script src="/assets/w2ui/w2ui.min.js"></script>
+<script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/js/adminlte.js"></script>
+<script src="/helper/penjualan/openCustomer.js"></script> 
+<script src="/helper/penjualan/tb_penjualan.js"></script>
+<script src="/helper/penjualan/openDetailTbPenjualan.js"></script>
+<script src="/helper/penjualan/openReturPenjualan.js"></script> 

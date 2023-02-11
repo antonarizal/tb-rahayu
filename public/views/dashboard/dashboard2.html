@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DIVA POS :: APLIKASI PENJUALAN</title>
+  <link rel="stylesheet" href="/plugins/fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="/assets/css/adminlte.min.css">
+  <style>
+    .text-right{
+      text-align:right
+    }
+  </style>
+</head>
+
+<body class="hold-transition layout-top-nav">
+  <div class="wrapper">
+    <div class="content-wrapper">
+      <section class="content-header">
+        <div class="container-fluid">
+          <!-- <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1>Dashboard</h1>
+            </div>
+            <div class="col-sm-6">
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item active">Dashboard</li>
+              </ol>
+            </div>
+          </div> -->
+        </div>
+      </section>
+      <section class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card card-default">
+                <div class="card-header">
+                  <h3 class="card-title">Dashboard</h3>
+                </div>
+                <div class="card-body">
+                 
+                </div>
+              </div>
+            </div>
+          </div>
+        </div><!-- /.container-fluid -->
+      </section>
+    </div>
+  </div>
+
+
+  <script>
+    window.$ = window.jQuery = require('jquery');
+  </script>
+  <script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/plugins/chart.js/Chart.min.js"></script>
+  <script src="/assets/js/adminlte.min.js"></script>
+  <script>
+    const Store = require("electron-store");
+    const store = new Store();
+    const server_url =
+      "http://" + store.get("hostName") + ":" + store.get("port") + "/";
+    var api_url = server_url + "api/product/retail";
+
+    const numeral = require("numeral");
+
+    $(function () {
+      $.getJSON(server_url+"api/action/dashboard",function(resp){
+        console.log()
+        var spj_day = resp.penjualan.day - resp.retur_penjualan.day;
+        $("#spj_day").html("Rp."+numeral(spj_day).format("0,0"))
+        $("#pj_day").html("Rp."+numeral(resp.penjualan.day).format("0,0"))
+        $("#pj_month").html("Rp."+numeral(resp.penjualan.month).format("0,0"))
+        $("#pj_year").html("Rp."+numeral(resp.penjualan.year).format("0,0"))
+        $("#pj_all").html("Rp."+numeral(resp.penjualan.all).format("0,0"))
+
+        var spj_month = resp.penjualan.month - resp.retur_penjualan.month;
+        $("#spj_month").html("Rp."+numeral(spj_month).format("0,0"))
+        $("#lb_day").html("Rp."+numeral(resp.laba.day).format("0,0"))
+        $("#lb_month").html("Rp."+numeral(resp.laba.month).format("0,0"))
+        $("#lb_year").html("Rp."+numeral(resp.laba.year).format("0,0"))
+        $("#lb_all").html("Rp."+numeral(resp.laba.all).format("0,0"))
+
+        $("#terjual_day").html(numeral(resp.terjual.day).format("0,0"))
+        $("#terjual_month").html(numeral(resp.terjual.month).format("0,0"))
+        $("#terjual_year").html(numeral(resp.terjual.year).format("0,0"))
+        $("#terjual_all").html(numeral(resp.terjual.all).format("0,0"))
+
+        $("#rpj_day").html("Rp."+numeral(resp.retur_penjualan.day).format("0,0"))
+        $("#rpj_month").html("Rp."+numeral(resp.retur_penjualan.month).format("0,0"))
+        $("#rpj_year").html("Rp."+numeral(resp.retur_penjualan.year).format("0,0"))
+        $("#rpj_all").html("Rp."+numeral(resp.retur_penjualan.all).format("0,0"))
+
+
+      })
+      /* ChartJS
+       * -------
+       * Here we will create a few charts using ChartJS
+       */
+
+      //--------------
+      //- AREA CHART -
+      //--------------
+
+      // Get context with jQuery - using jQuery's .get() method.
+      $.getJSON(server_url+"api/action/chart",function(resp){
+
+      var barChartData = {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Ags', 'Sep', 'Okt', 'Nop', 'Des'],
+        datasets: [{
+            label: 'Penjualan',
+            backgroundColor: 'rgba(60,141,188,0.9)',
+            borderColor: 'rgba(60,141,188,0.8)',
+            pointRadius: false,
+            pointColor: '#3b8bba',
+            pointStrokeColor: 'rgba(60,141,188,1)',
+            pointHighlightFill: '#fff',
+            pointHighlightStroke: 'rgba(60,141,188,1)',
+            data: resp.penjualan
+          },
+          {
+            label: 'Laba',
+            backgroundColor: 'rgba(210, 214, 222, 1)',
+            borderColor: 'rgba(210, 214, 222, 1)',
+            pointRadius: false,
+            pointColor: 'rgba(210, 214, 222, 1)',
+            pointStrokeColor: '#c1c7d1',
+            pointHighlightFill: '#fff',
+            pointHighlightStroke: 'rgba(220,220,220,1)',
+            data: resp.laba
+          },
+        ]
+      }
+
+      var barChartCanvas = $('#barChart').get(0).getContext('2d')
+      var barChartData = $.extend(true, {}, barChartData)
+      var temp0 = barChartData.datasets[0]
+      var temp1 = barChartData.datasets[1]
+      barChartData.datasets[0] = temp0
+      barChartData.datasets[1] = temp1
+
+      var barChartOptions = {
+        responsive: true,
+        maintainAspectRatio: false,
+        datasetFill: false
+      }
+
+      var barChart = new Chart(barChartCanvas, {
+        type: 'bar',
+        data: barChartData,
+        options: barChartOptions
+      })
+
+    })
+    })
+  </script>
+</body>
+
+</html>

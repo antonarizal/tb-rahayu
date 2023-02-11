@@ -1,0 +1,127 @@
+{
+  "name": "ud-rahayu",
+  "version": "3.2.11",
+  "description": "DIVAPOS - Aplikasi Kasir Penjualan",
+  "private": true,
+  "main": "main.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/exrush/divapos.git"
+  },
+  "scripts": {
+    "start": "electron .",
+    "ugly": "node build/uglify.js",
+    "s3": "node build/s3.js",
+    "package-win": "electron-packager . divapos --overwrite --asar=true --platform=win32 --arch=ia32 --icon=build/icon.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"divapos\"",
+    "package-linux": "electron-packager . divapos --overwrite --asar=true --platform=linux --arch=x64 --icon=build/icon.ico --prune=true --out=release-builds",
+    "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=build/icon.ico --prune=true --out=release-builds",
+    "dev": "electron-webpack dev",
+    "compile": "electron-webpack",
+    "dist": "yarn ugly && yarn compile && electron-builder && yarn s3",
+    "dist:dir": "yarn dist --dir -c.compression=store -c.mac.identity=null",
+    "pack": "electron-builder --dir",
+    "build": "yarn compile &&  electron-builder",
+    "publish": "yarn ugly && yarn compile &&  electron-builder --publish always"
+  },
+  "electronWebpack": {
+    "staticSourceDirectory": "project",
+    "main": {
+      "sourceDirectory": "./"
+    },
+    "renderer": {
+      "sourceDirectory": null
+    }
+  },
+  "build": {
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "ExrushUpdater",
+        "repo": "novapos"
+      },
+      {
+        "provider": "s3",
+        "bucket": "divapos",
+        "path": "/novapos"
+      }
+    ],
+    "productName": "UD RAHAYU",
+    "appId": "com.exrush.novapos",
+    "copyright": "Copyright © PT. Exrush Digital Nusantara",
+    "directories": {
+      "output": "release/"
+    },
+    "asar": true,
+    "asarUnpack": [],
+    "files": [
+      "**/*",
+      "!menu.js",
+      "!sync.js",
+      "!custom.js",
+      "!validate.js",
+      "!network.js",
+      "!build/**/*",
+      "!release/**/*",
+      "!dist/**/*",
+      "!project/**/*",
+      "!dist/**/*",
+      "!script/**/*"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "ia32"
+          ]
+        }
+      ],
+      "icon": "build/icon.ico"
+    },
+    "nsis": {
+      "createDesktopShortcut": true,
+      "artifactName": "rahayu.setup.${version}.${ext}"
+    }
+  },
+  "author": "PT. EXRUSH DIGITAL NUSANTARA",
+  "homepage": "https://exrush.com",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "cors": "^2.8.5",
+    "electron-log": "^4.4.1",
+    "electron-pos-printer": "^1.2.4",
+    "electron-store": "^8.0.0",
+    "electron-updater": "^4.3.9",
+    "electron-webpack": "^2.8.2",
+    "express": "^4.17.1",
+    "form-data": "^4.0.0",
+    "gulp-connect-php": "^1.0.3",
+    "jquery": "^3.6.0",
+    "js-yaml": "^4.1.0",
+    "license-key-generator": "^1.1.2",
+    "macaddress": "^0.5.2",
+    "moment": "^2.29.3",
+    "network": "^0.5.0",
+    "nodejs-base64": "^2.0.0",
+    "nodejs-license-key": "^1.0.1",
+    "numeral": "^2.0.6",
+    "request": "^2.88.2",
+    "select2": "^4.1.0-rc.0",
+    "source-map-support": "^0.5.19",
+    "toastr": "^2.1.4",
+    "unzipper": "^0.10.11"
+  },
+  "devDependencies": {
+    "adm-zip": "^0.5.5",
+    "aws-sdk": "^2.987.0",
+    "cli-spinner": "^0.2.10",
+    "electron": "^6.1.12",
+    "electron-builder": "^5.5.0",
+    "electron-webpack": "^2.8.2",
+    "fs-extra": "^10.0.0",
+    "uglify-php": "^1.0.7",
+    "walk-sync": "^3.0.0",
+    "webpack": "~5.70.0"
+  },
+  "type": "commonjs"
+}

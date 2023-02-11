@@ -1,0 +1,54 @@
+<html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DIVA POS :: APLIKASI PENJUALAN</title>
+<link rel="stylesheet" href="/assets/css/global.css" />
+<style>
+
+@font-face {
+        font-family: 'Merchant Copy';
+        src: url('/assets/fonts/Merchant Copy.ttf') ;
+      }
+        @font-face {
+         font-family: 'Telidon Hv Regular';
+        src: url('/assets/fonts/Telidon Hv Regular.ttf') ;
+      }
+        @font-face {
+        font-family: 'fake receipt';
+        src: url('/assets/fonts/fake receipt.ttf') ;
+      }
+      @page {margin: 0;}
+      pre{
+        top:0px;
+        margin-left:5px;
+        margin-top:0px;
+        font-weight:normal;
+        font-size:12px !important;
+      }
+      @media print {
+        body{
+            top:0px;
+        }
+        pre {
+            margin-left:5px;
+            margin-top:0px;
+            font-weight:normal;
+            font-size:12px !important;
+            line-height: 1px;
+        }
+     }
+
+</style>
+<span id="cetak" class="ignore-css"></span>
+
+<script>
+    window.$ = window.jQuery = require('jquery');
+</script>
+
+<script src="/assets/js/localdb.min.js"></script>
+<script src="/assets/js/tanggal.js"></script>
+<script src="/assets/w2ui/w2ui.min.js"></script>
+<script src="/helper/pengaturan/dataFaktur.js"></script>
+<script src="/helper/pengaturan/nota.js"></script>
+<script src="/helper/pengaturan/cetak.js"></script>
+<script src="/assets/js/jQuery.print.js"></script>

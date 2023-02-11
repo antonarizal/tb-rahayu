@@ -1,0 +1,121 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>DIVAPOS 3 :: LOGIN</title>
+    <link rel="stylesheet" href="/plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="/assets/css/adminlte.min.css">
+    <link rel="stylesheet" href="/assets/w2ui/w2ui.min.css" />
+
+    <style>
+        /*
+*
+* ==========================================
+* CUSTOM UTIL CLASSES
+* ==========================================
+*
+*/
+        @font-face {
+            font-family: 'Merchant Copy';
+            src: url('/assets/fonts/Merchant Copy.ttf') format('truetype');
+            font-family: 'fake receipt';
+            src: url('/assets/fonts/fake receipt.ttf') format('truetype');
+            font-family: 'Telidon Hv Regular';
+            src: url('/assets/fonts/Telidon Hv Regular.ttf') format('truetype');
+            font-family: 'conthrax-sb';
+            src: url('/assets/fonts/conthrax-sb.ttf') ;
+        }
+        #nama_toko{
+            font-family: 'conthrax-sb';
+        }
+
+        .login,
+        .image {
+            min-height: 100vh;
+        }
+
+        .bg-image {
+            background-image: url('/images/bg_login.jpg');
+            background-size: cover;
+            background-position: center center;
+        }
+
+        .col-md-6 {
+            padding-left: 0px !important;
+        }
+
+        .footer {
+            padding: 5px;
+            background-color: brown;
+            color: #d6d4d4;
+        }
+    </style>
+</head>
+
+<body class="hold-transition login-page">
+    <div class="container-fluid">
+        <img src="/images/logo-web-dark.png" style="width:200px;position:absolute;top:5px;left:5px;z-index:10000">
+
+        <div class="row no-gutter">
+            <div class="col-md-6 d-none d-md-flex bg-image"></div>
+            <div class="col-md-6 bg-light">
+
+                <div style="background:#eee;border-bottom:5px solid #d6d4d4;width:100%;position:absolute;top:0px">
+                    <h3 style="padding:10px 0px 0px 20px" id="nama_toko"></h3>
+                    <p style="padding:5px 0px 0px 20px">
+                        <span id="alamat_toko"></span>
+                        <span id="kota"></span>
+                        Telp. <span id="telp"></span>
+                    </p>
+                </div>
+
+                <div class="login d-flex align-items-center py-5">
+                    <div class="container">
+
+                        <div class="row">
+                            <div class="col-lg-10 col-xl-7 mx-auto">
+                                <h3 class="display-4">Login</h3>
+                                <p class="text-muted mb-4" id="login-text">Masukkan username dan password untuk
+                                    mengakses</p>
+                                <form method="post" id="login">
+                                    <div class="form-group mb-3">
+                                        <input id="username" type="text" name="username" placeholder="Username"
+                                            required="" autofocus=""
+                                            class="form-control rounded-pill border-0 shadow-sm px-4">
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <input id="inputPassword" type="password" name="password" placeholder="Password"
+                                            required=""
+                                            class="form-control rounded-pill border-0 shadow-sm px-4 text-primary">
+                                    </div>
+                                    <button type="submit"
+                                        class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">Sign
+                                        in</button>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div><!-- End -->
+
+                </div>
+                <div style="width:100%;position:absolute;bottom:0px">
+                    <div class="footer" id="footer">APLIKASI DIVAPOS 3 :: TRIAL</div>
+
+                </div>
+            </div><!-- End -->
+        </div>
+    </div>
+    <!-- jQuery -->
+    <script src="/assets/js/localdb.min.js"></script>
+    <script>
+        window.$ = window.jQuery = require('jquery');
+    </script>
+    <script src="/assets/w2ui/w2ui.min.js"></script>
+    <script src="/helper/home/login.js"></script>
+    <div id="app">
+
+    </div>
+</body>
+
+</html>

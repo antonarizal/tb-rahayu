@@ -1,0 +1,136 @@
+<html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SYGMA POS :: WARINGIN INDAH :: KASIR POS</title>
+<link rel="stylesheet" href="/plugins/fontawesome-free/css/all.min.css">
+<link rel="stylesheet" href="/assets/css/adminlte.min.css">
+<link rel="stylesheet" href="/assets/w2ui/w2ui.min.css" />
+<link rel="stylesheet" href="/assets/css/global.css" />
+<style>
+    .w2field{
+        width:100%
+    }
+</style>
+<div class="wrapper">
+    <div class="content-header" style="padding:10px;">
+    </div>
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="grid" style="width: 100%; min-height: 600px;overflow:hidden"></div>
+                    <span style="float:right" id="count"></span>
+
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<div class="modal fade" id="modal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form id="post">
+                <input type="hidden" name="insert" id="insert" class="form-control" value="1"  required autocomplete=off>
+                <div class="modal-header">
+                    <p class="modal-title" style="font-weight:bold" id="data_title">Tambah Customer</p>
+                </div>
+                <div class="row">
+                <table class="table table-sm text-sm col-md-6">
+                    <tr>
+                        <td style="width:160px">ID Customer</td>
+                        <td>
+                            <input name="cusid" type="text" class="w2ui-input w2field " required readonly>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width:160px">Nama Customer</td>
+                        <td>
+                            <input name="customer" type="text" class="w2ui-input w2field " required>
+                        </td>
+                    </tr>
+                  <tr>
+                        <td style="width:160px">Alamat</td>
+                        <td>
+                            <textarea name="address" type="text" class="w2ui-input w2field " ></textarea>
+                        </td>
+                    </tr>
+                  <tr>
+                        <td style="width:160px">Kelurahan</td>
+                        <td>
+                            <input name="village" type="text" class="w2ui-input w2field " >
+                        </td>
+                    </tr>
+                  <tr>
+                        <td style="width:160px">Kecamatan</td>
+                        <td>
+                            <input name="subcity" type="text" class="w2ui-input w2field " >
+                        </td>
+                    </tr>
+                  <tr>
+                        <td style="width:160px">Kabupaten</td>
+                        <td>
+                            <input name="city" type="text" class="w2ui-input w2field " >
+                        </td>
+                    </tr>
+                </table>
+                <table class="table table-sm text-sm col-md-6">
+               
+                  <tr>
+                        <td style="width:160px">Phone</td>
+                        <td>
+                            <input name="phone" type="text" class="w2ui-input w2field " >
+                        </td>
+                    </tr>
+                  <tr>
+                        <td style="width:160px">Handphone 1</td>
+                        <td>
+                            <input name="handphone1" type="text" class="w2ui-input w2field " >
+                        </td>
+                    </tr>
+                  <tr>
+                        <td style="width:160px">Handphone 2</td>
+                        <td>
+                            <input name="handphone2" type="text" class="w2ui-input w2field " >
+                        </td>
+                    </tr>
+                  <tr>
+                        <td style="width:160px">Email</td>
+                        <td>
+                            <input name="email" type="text" class="w2ui-input w2field " >
+                        </td>
+                    </tr>
+                  <tr>
+                        <td style="width:160px">Status</td>
+                        <td>
+                            <input name="status" type="text" class="w2ui-input w2field " required>
+                        </td>
+                    </tr>
+                  <tr>
+                        <td style="width:160px">Kelompok</td>
+                        <td>
+                            <input name="kelompok" type="text" class="w2ui-input w2field " required>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+                <div class="modal-footer">
+                    <input type="submit" value="Simpan" class="btn btn-sm btn-primary" />
+                    <a href="javascript:void(0)" class="btn btn-sm btn-default" data-dismiss="modal"
+                        aria-label="Close">Batal</a>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+
+<script>
+    window.$ = window.jQuery = require('jquery');
+</script>
+
+<script src="/assets/js/localdb.min.js"></script>
+<script src="/assets/w2ui/w2ui.min.js"></script>
+<script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/js/adminlte.js"></script>
+<script src="/helper/customer/customer.js"></script>

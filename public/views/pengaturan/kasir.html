@@ -1,0 +1,73 @@
+<html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DIVA POS :: APLIKASI PENJUALAN</title>
+<link rel="stylesheet" href="/plugins/fontawesome-free/css/all.min.css">
+<link rel="stylesheet" href="/assets/css/adminlte.min.css">
+<link rel="stylesheet" href="/assets/w2ui/w2ui.min.css" />
+<link rel="stylesheet" href="/assets/css/global.css" />
+<link rel="stylesheet" href="/plugins/toastr/toastr.min.css">
+<style>
+    .w2field {
+        width: 100%
+    }
+</style>
+<div class="wrapper">
+    <div class="content-header" style="padding:10px;">
+    </div>
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card card-outline card-default">
+                        <div class="card-header">
+                            <h3 class="card-title">Pengaturan Kasir</h3>
+                        </div>
+                        <div class="card-body">
+                            <form action="" id="post">
+                                <table class="table table-sm text-sm ">
+                                    <tr>
+                                        <td style="width:160px">Edit Harga</td>
+                                        <td>
+                                            <input name="edit_harga" type="text" class="w2ui-input w2field " required>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:160px">Alamat</td>
+                                        <td>
+                                            <textarea name="alamat" type="text" class="w2ui-input w2field "></textarea>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:160px">No Telp</td>
+                                        <td>
+                                            <input name="no_telp" type="text" class="w2ui-input w2field ">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:160px"></td>
+                                        <td>
+                                            <input type="submit" value="Simpan" class="btn btn-sm btn-primary float-right" />        
+                                        </td>
+                                    </tr>
+                                </table>
+                            </form>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    
+                </div>
+            </div>
+    </section>
+</div>
+</div>
+
+<script>
+    window.$ = window.jQuery = require('jquery');
+</script>
+
+<script src="/assets/js/localdb.min.js"></script>
+<script src="/assets/w2ui/w2ui.min.js"></script>
+<script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/js/adminlte.js"></script>
+<script src="/helper/pengaturan/pengaturan.js"></script>

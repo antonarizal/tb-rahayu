@@ -1,0 +1,177 @@
+<html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DIVA POS :: APLIKASI PENJUALAN</title>
+<link rel="stylesheet" href="/plugins/fontawesome-free/css/all.min.css">
+<link rel="stylesheet" href="/assets/css/adminlte.min.css">
+<link rel="stylesheet" href="/assets/w2ui/w2ui.min.css" />
+<link rel="stylesheet" href="/assets/css/global.css" />
+<link rel="stylesheet" href="/plugins/toastr/toastr.min.css">
+<style>
+
+@font-face {
+        font-family: 'Merchant Copy';
+        src: url('/assets/fonts/Merchant Copy.ttf') ;
+      }
+        @font-face {
+         font-family: 'Telidon Hv Regular';
+        src: url('/assets/fonts/Telidon Hv Regular.ttf') ;
+      }
+        @font-face {
+        font-family: 'fake receipt';
+        src: url('/assets/fonts/fake receipt.ttf') ;
+      }
+      @page {margin: 0;}
+      pre{
+        top:0px;
+        margin-left:5px;
+        margin-top:0px;
+        font-weight:normal;
+        font-size:12px !important;
+      }
+      @media print {
+        body{
+            top:0px;
+            width: 80mm;
+            line-height: 1px;
+            font-size:16px !important;
+
+        }
+        pre {
+            margin-left:5px;
+            margin-top:0px;
+            font-weight:normal;
+            font-size:16px !important;
+            line-height: 1px;
+        }
+     }
+
+</style>
+<div class="wrapper">
+    <div class="content-header" style="padding:10px;">
+    </div>
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                
+                <div class="col-md-5">
+                    <div class="card card-outline card-default">
+                        <div class="card-header">
+                            <h3 class="card-title">Pengaturan Cetak Struk</h3>
+                        </div>
+                        <div class="card-body">
+                            <form action="" id="post">
+                                <table class="table table-sm text-sm ">
+                                   
+                                    <tr>
+                                        <td style="width:160px">Default ukuran kertas</td>
+                                        <td>
+                                            <select style="width:200px" name="default_ukuran_kertas" id="default_ukuran_kertas"  class="form-control" required>
+                                                <option>custom</option>
+                                                <option>58mm</option>
+                                                <option>80mm</option>
+                                                <option>A4dotmatrix</option>
+                                            </select>
+                                            
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:160px">Margin Atas</td>
+                                        <td>
+                                            <input name="printer_margin_top" type="number" class="w2ui-input w2field ">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:160px">Margin Kiri</td>
+                                        <td>
+                                            <input name="printer_margin_left" type="number" class="w2ui-input w2field ">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:160px">Lebar</td>
+                                        <td>
+                                            <input name="printer_width" min=1 max=10 type="number" class="w2ui-input w2field " required>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:160px">Ukuran Font</td>
+                                        <td>
+                                            <input onChange="loadNota()" name="printer_font_size" id="printer_font_size" type="number" class="w2ui-input w2field " required>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:160px">Ketebalan Font</td>
+                                        <td>
+                                            <select onChange="loadNota()"  id="printer_font_weight" name="printer_font_weight">
+                                                <option value="normal">Normal</option>
+                                                <option value="bold">Tebal</option>
+                                            </select>
+                                            
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:160px">Jenis Font</td>
+                                        <td>
+                                            <select onChange="loadNota()"  id="printer_font_family" name="printer_font_family">
+                                                <option value="Merchant Copy">Merchant Copy</option>
+                                                <option value="fake receipt">fake receipt</option>
+                                                <option value="Telidon Hv Regular">Telidon Hv Regular</option>
+                                                <option value="Consolas">Consolas</option>
+                                            </select>
+                                            
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td colspan="2">
+                                            Tulisan Footer</td>
+                                       
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <textarea onKeyup="loadNota()" style="width:100%;height:200px" id="printer_footer_text" name="printer_footer_text" type="text" class="w2ui-input w2field "></textarea>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:160px"></td>
+                                        <td>
+                                            <input type="submit" value="Simpan" class="btn btn-sm btn-primary float-right" />        
+                                        </td>
+                                    </tr>
+                                </table>
+                            </form>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    
+                </div>
+                <div class="col-md-7">
+                    <div class="card card-outline card-default">
+                        <div class="card-header">
+                            <h3 class="card-title">Preview</h3>
+                            <a href="javascript:cetakNota()" class="btn btn-primary btn-sm float-right">Cetak Nota</a>
+
+                        </div>
+                        <div class="card-body">
+                            <span id="cetak" class="ignore-css"></span>
+                        </div>
+                    </div>
+                    </div>
+                    
+            </div>
+    </section>
+</div>
+</div>
+<script>
+    window.$ = window.jQuery = require('jquery');
+</script>
+
+<script src="/assets/js/localdb.min.js"></script>
+<script src="/assets/js/tanggal.js"></script>
+<script src="/assets/w2ui/w2ui.min.js"></script>
+<script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/js/adminlte.js"></script>
+<script src="/helper/pengaturan/dataFaktur.js"></script>
+<script src="/helper/pengaturan/nota.js"></script>
+<script src="/helper/pengaturan/cetak.js"></script>
+<script src="/assets/js/jQuery.print.js"></script>

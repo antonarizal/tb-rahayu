@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>:: DIVAPOS :: SOFTWARE KASIR</title>
+    <style>
+        * 
+        {
+            margin: 0;
+            padding: 0;
+        }
+
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            background: url(./assets/img/loading.svg) center center no-repeat;
+        }
+
+        .frame {
+            border: none;
+            display: block;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+        #notification {
+            font-family: Arial, Helvetica, sans-serif;
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            width: 300px;
+            padding: 20px;
+            border-radius: 5px;
+            background-color: white;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        }
+        #session {
+            font-family: Arial, Helvetica, sans-serif;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 300px;
+            padding: 20px;
+            border-radius: 5px;
+            background-color: white;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        }
+        #update {
+            font-family: Arial, Helvetica, sans-serif;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 300px;
+            padding: 20px;
+            border-radius: 5px;
+            background-color: white;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        }
+        .hidden {
+        display: none;
+        }
+        .close {
+                box-shadow:inset 0px 1px 0px 0px #fc9797;
+                background:linear-gradient(to bottom, #f5783d 5%, #c43a46 100%);
+                background-color:#f5783d;
+                border-radius:6px;
+                border:1px solid #eb343d;
+                display:inline-block;
+                cursor:pointer;
+                color:#ffffff;
+                font-family:Arial;
+                font-size:15px;
+                font-weight:bold;
+                padding:6px 24px;
+                text-decoration:none;
+                text-shadow:0px 1px 0px #cc2c16;
+            }
+            .close:hover {
+                background:linear-gradient(to bottom, #c43a46 5%, #f5783d 100%);
+                background-color:#c43a46;
+            }
+            .close:active {
+                position:relative;
+                top:1px;
+            }
+
+                    
+        .restart {
+            box-shadow:inset 0px 1px 0px 0px #97c4fe;
+            background:linear-gradient(to bottom, #3d94f6 5%, #1e62d0 100%);
+            background-color:#3d94f6;
+            border-radius:6px;
+            border:1px solid #337fed;
+            display:inline-block;
+            cursor:pointer;
+            color:#ffffff;
+            font-family:Arial;
+            font-size:15px;
+            font-weight:bold;
+            padding:6px 24px;
+            text-decoration:none;
+            text-shadow:0px 1px 0px #1570cd;
+        }
+        .restart:hover {
+            background:linear-gradient(to bottom, #1e62d0 5%, #3d94f6 100%);
+            background-color:#1e62d0;
+        }
+        .restart:active {
+            position:relative;
+            top:1px;
+        }
+        .loader {
+            border: 5px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 5px solid #3498db;
+            width: 20px;
+            height: 20px;
+            -webkit-animation: spin 2s linear infinite; /* Safari */
+            animation: spin 2s linear infinite;
+            float:right;
+            }
+
+            /* Safari */
+            @-webkit-keyframes spin {
+            0% { -webkit-transform: rotate(0deg); }
+            100% { -webkit-transform: rotate(360deg); }
+            }
+
+            @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+            }
+            #update{
+              display:none
+            }
+    </style>
+</head>
+
+<body>
+    <div id="notification" class="hidden">
+        <p id="message"></p>
+        <button class="close" id="close-button" class="btn btn-primary" onClick="closeNotification()">
+          Tutup
+        </button>
+        <button class="restart" id="restart-button" onClick="restartApp()" class="hidden">
+          Restart
+        </button>
+      </div>
+      
+      <div id="session" class="">
+        <p id="">Sesi Anda telah berakhir, silakan login kembali.</p>
+        <button class="close" id="close-button" class="btn btn-primary" onClick="closeSession()">
+          Tutup
+        </button>
+        <button class="restart" id="login-button" class="btn btn-primary" onClick="loginSession()">
+          Login
+        </button>
+      </div>     
+
+      <div id="update" class="">
+        <p style="font-weight:bold">Aplikasi Anda Perlu Update</p>
+        <p id="">Versi Terpasang : <span id="verNow"></span></p>
+        <p id="">Versi Terbaru : <span id="verUpdate"></span></p>
+        <button class="close" id="close-button" class="btn btn-primary" onClick="closeUpdate()">
+          Tutup
+        </button>
+        <button class="restart" id="login-button" class="btn btn-primary" onClick="checkUpdate()">
+          Update
+        </button>
+      </div>
+
+    <iframe id="frame" height="100%" width="100%" frameborder="0"></iframe>
+    <script type="text/javascript">
+    const config = require('./config');
+    const package = require('./package');
+    console.log(package.name)
+    console.log(package.version)
+
+    document.title = config.name
+    document.getElementById("frame").src = "http://localhost:"+config.port;
+
+    document.getElementById('frame').onload = function () {
+        document.title = config.name;
+
+    }
+  var url =('http://localhost:'+config.port+'/page.php?page=session')
+
+var auto_refresh = setInterval(
+    function() {
+    const xhttp = new XMLHttpRequest();
+    try{
+      xhttp.onreadystatechange = function() {
+        // console.log(xhttp);
+        xhttp.onload = function() {
+        var resp = (this.responseText)
+        console.log(this.status);
+          if(resp == false){
+            console.log("logout");
+            document.getElementById("session").style.display = "block";
+
+          }else{
+            console.log("login");
+            document.getElementById("session").style.display = "none";
+            
+          }
+        }
+
+        if (xhttp.readyState == 4 && xhttp.status == 0) {
+          // alert("Sepertinya ada masalah! Silakan tutup dan buka ulang aplikasi.");
+          document.getElementById("frame").style.display = "none";
+          ipcRenderer.send('startPHP');
+
+
+        }
+      };
+      xhttp.open("GET", url, true);
+      xhttp.send();
+    }catch(e){
+      console.log('catch', e);
+    }
+
+    }, 5000);
+
+
+
+    </script>
+    
+  <script>
+    const { ipcRenderer } = require('electron');
+    const version = document.getElementById('version');
+    const notification = document.getElementById('notification');
+    const session = document.getElementById('session');
+    const message = document.getElementById('message');
+    const restartButton = document.getElementById('restart-button');
+    
+    ipcRenderer.send('app_version');
+    ipcRenderer.on('app_version', (event, arg) => {
+      ipcRenderer.removeAllListeners('app_version');
+      // version.innerText = 'Version ' + arg.version;
+    });
+
+    ipcRenderer.on('update_available', () => {
+      ipcRenderer.removeAllListeners('update_available');
+      message.innerHTML = '<div class="loader"></div> Update terbaru sudah tersedia. Proses download...';
+      document.getElementById("update").style.display = "none";
+      notification.classList.remove('hidden');
+    });
+
+    ipcRenderer.on('update_not_available', () => {
+      log.info('ipcRenderer on update_not_available')
+      ipcRenderer.removeAllListeners('update_not_available');
+      message.innerText = 'Tidak ditemukan pembaharuan.';
+      notification.classList.remove('hidden');
+    });
+
+
+    ipcRenderer.on('update_downloaded', () => {
+      ipcRenderer.removeAllListeners('update_downloaded');
+      message.innerText = 'Update berhasil didownload. Aplikasi perlu direstart untuk memperbaharui. Restart sekarang?';
+      document.getElementById("update").style.display = "none";
+      restartButton.classList.remove('hidden');
+      notification.classList.remove('hidden');
+    });
+
+    function closeNotification() {
+      notification.classList.add('hidden');
+    }
+    
+    function closeSession() {
+      // clearInterval(auto_refresh);
+      document.getElementById("session").style.display = "none";
+
+    }
+        
+    function loginSession() {
+      session.classList.add('hidden');
+      document.title = config.name
+        document.getElementById("frame").src = "http://localhost:"+config.port;
+
+        document.getElementById('frame').onload = function () {
+            document.title = document.getElementById("frame").contentDocument.title;
+
+        }
+    }
+    
+    function restartApp() {
+      var r = confirm("Sebelum merestart Anda perlu melakukan backup database. Anda yakin merestart?");
+        if (r == true) {
+          ipcRenderer.send('restart_app');
+        } else {
+        }
+
+    }
+
+    function closeUpdate(){
+      document.getElementById("update").style.display = "none";
+
+    }
+    function checkUpdate(){
+      document.getElementById("update").style.display = "none";
+      ipcRenderer.send('checkUpdate');
+
+    }
+const axios = require('axios');
+const yaml = require('js-yaml');
+
+// Make a request for a user with a given ID
+axios.get('https://divapos.s3.us-east-1.amazonaws.com/'+package.name+'/latest.yml')
+  .then(function (response) {
+    // handle success
+    var data = (response.data);
+    var obj = yaml.load( data );
+    console.log( obj.version );
+    if(package.version < obj.version){
+      console.log("Perlu Update")
+      document.getElementById("update").style.display = "block";
+      document.getElementById("verNow").innerHTML = package.version;
+      document.getElementById("verUpdate").innerHTML = obj.version;
+
+    }else{
+      document.getElementById("update").style.display = "none";
+
+    }
+  })
+  .catch(function (error) {
+    // handle error
+    console.log(error);
+    document.getElementById("update").style.display = "none";
+
+  })
+  .then(function () {
+    // always executed
+
+  });
+
+
+  </script>
+</body>
+
+</html>

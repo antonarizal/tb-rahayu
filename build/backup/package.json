@@ -1,0 +1,108 @@
+{
+  "name": "divapos-retail",
+  "version": "1.0.5",
+  "description": "DIVAPOS - Aplikasi Kasir Penjualan",
+  "private": true,
+  "main": "main.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/exrush/divapos.git"
+  },
+  "scripts": {
+    "start": "electron .",
+    "ugly": "node build/uglify.js",
+    "package-win": "electron-packager . divapos --overwrite --asar=true --platform=win32 --arch=ia32 --icon=build/icon.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"divapos\"",
+    "package-linux": "electron-packager . divapos --overwrite --asar=true --platform=linux --arch=x64 --icon=build/icon.ico --prune=true --out=release-builds",
+    "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=build/icon.ico --prune=true --out=release-builds",
+    "dev": "electron-webpack dev",
+    "compile": "electron-webpack",
+    "dist": "yarn compile && electron-builder",
+    "dist:dir": "yarn dist --dir -c.compression=store -c.mac.identity=null",
+    "pack": "electron-builder --dir",
+    "build": "electron-builder",
+    "publish": "electron-builder --publish always"
+  },
+  "electronWebpack": {
+    "staticSourceDirectory": "project",
+    "main": {
+      "sourceDirectory": "./"
+    },
+    "renderer": {
+      "sourceDirectory": null
+    }
+  },
+  "build": {
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "ExrushUpdater",
+        "repo": "divapos-retail"
+      },
+      {
+        "provider": "s3",
+        "bucket": "divapos",
+        "path": "/divapos-retail"
+      }
+    ],
+    "productName": "DIVAPOS RETAIL",
+    "appId": "com.exrush.divapos-retail",
+    "copyright": "Copyright © PT. Exrush Digital Nusantara",
+    "directories": {
+      "output": "release/"
+    },
+    "asar": true,
+    "asarUnpack": [],
+    "files": [
+      "**/*",
+      "!menu.js",
+      "!validate.js",
+      "!network.js",
+      "!build/**/*",
+      "!release/**/*",
+      "!dist/**/*",
+      "!project/**/*",
+      "!script/**/*"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "ia32"
+          ]
+        }
+      ],
+      "icon": "build/icon.ico"
+    },
+    "nsis": {
+      "createDesktopShortcut": true,
+      "artifactName": "divapos-retail.setup.${version}.${ext}"
+    }
+  },
+  "author": "PT. EXRUSH DIGITAL NUSANTARA",
+  "homepage": "https://exrush.com",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "cors": "^2.8.5",
+    "electron-log": "^4.4.1",
+    "electron-store": "^8.0.0",
+    "electron-updater": "^4.3.9",
+    "electron-webpack": "^2.8.2",
+    "express": "^4.17.1",
+    "gulp-connect-php": "^1.0.3",
+    "js-yaml": "^4.1.0",
+    "license-key-generator": "^1.1.2",
+    "macaddress": "^0.5.2",
+    "network": "^0.5.0",
+    "nodejs-license-key": "^1.0.1",
+    "source-map-support": "^0.5.19",
+    "uglify-php": "^1.0.7",
+    "walk-sync": "^3.0.0"
+  },
+  "devDependencies": {
+    "electron": "^10.4.7",
+    "electron-builder": "^22.9.1",
+    "electron-webpack": "^2.8.2",
+    "webpack": "~4.42.1"
+  }
+}

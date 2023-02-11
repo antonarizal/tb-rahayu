@@ -1,0 +1,214 @@
+<html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SYGMA POS :: WARINGIN INDAH :: MUTASI</title>
+<link rel="stylesheet" href="/plugins/fontawesome-free/css/all.min.css">
+<link rel="stylesheet" href="/assets/css/adminlte.min.css">
+<link rel="stylesheet" href="/assets/w2ui/w2ui.min.css" />
+<style>
+    body {
+        background-color: #edf7ea;
+    }
+
+    #subtotal {
+        background-color: #edf7ea;
+        width: 100%;
+        height: 80px;
+        font-weight: bold;
+        text-align: right;
+        font-size: 50px;
+        float: right;
+        padding: 10px;
+    }
+
+    .table-header {
+        font-size: 16px;
+        font-weight: bold;
+
+    }
+
+    #kasir_header {
+        color: rgb(238, 58, 58);
+        text-shadow: -1px 0 white, 0 3px white, 3px 0 white, 0 -1px white;
+        font-weight: 500;
+    }
+
+    #nama_toko {
+        color: rgb(238, 58, 58);
+        text-shadow: -1px 0 white, 0 3px white, 3px 0 white, 0 -1px white;
+        font-weight: 500;
+
+    }
+
+    hr {
+        margin-top: 0px;
+        margin-bottom: 5px;
+    }
+</style>
+
+<div class="wrapper">
+    <br>
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h2 style="text-align: center;" id="kasir_header"></h2>
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <table>
+                                        <tr>
+                                            <td>Lokasi Asal</td>
+                                            <td><select name="" id="lokasiAsal" style="width:80px">
+                                                <option>--</option>
+
+                                                </select>
+                                            </td>
+                                            <td><input  type="hidden" name="" id="lokasiAsalId" value="" class="form-control-sm"><input readonly type="text" name="" id="lokasiAsalText" value="" class="form-control-sm"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Lokasi Tujuan</td>
+                                            <td><select name="" id="lokasiTujuan" style="width:80px">
+                                                <option>--</option>
+                                            </select>
+                                            </td>
+                                            <td><input  type="hidden" name="" id="lokasiTujuanId" value="" class="form-control-sm"><input readonly type="text" name="" id="lokasiTujuanText" value="" class="form-control-sm"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>No Mutasi</td>
+                                            <td><input type="text" readonly id="kode_mutasi" class="form-control-sm" style="width:80px">
+                                            </td>
+                                            <td><input type="text" name="" id="no_mutasi" class="form-control-sm">
+                                            <a href="javascript:noTrxAuto()" class="btn btn-default btn-sm">Auto</a>
+                                            </td>
+                                        </tr>
+                                    </table>
+
+                                </div>
+                                <div class="col-md-4">
+                                    <table>
+                                        <tr>
+                                            <td>Tanggal</td>
+                                            <td>
+                                                <input id="date" type="date" class="form-control-sm" style="width:150px">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Pengirim</td>
+                                            <td><select name="" id="pengirim" style="width:180px">
+                                                <option value="">--</option>
+                                            </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Penerima</td>
+                                            <td><select name="" id="penerima" style="width:180px">
+                                                <option value="">--</option>
+                                            </select>
+                                            </td>
+                                        </tr>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="col-md-4">
+
+                                    <table>
+                                        <tr>
+                                            <td>Customer</td>
+                                            <td>
+                                                <input readonly type="text" id="cusid" class="form-control-sm" style="width:50px">
+                                                <input readonly type="text" id="customer" class="form-control-sm" style="width:150px"> <a href="javascript:openCustomer()" class="btn  btn-default"><i class="fa fa-user"></i> </a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="vertical-align: top;"> 
+                                                Keterangan</td>
+                                            <td style="vertical-align: top;"> 
+                                                <textarea name="" id="keterangan" class="form-control" required></textarea>
+
+                                            </td>
+                                        </tr>
+
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div id="grid" style="width: 100%; height: 350px;overflow:hidden"></div>
+                    <div class="" style="padding:6px">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <form id="inputCart">
+                                    <div class="input-group" style="width: 100%">
+                                        <input class="form-control-sm" id="faktur" style="width:300px" name="faktur"
+                                            type="hidden" autocomplete="off" />
+                                        <span class="input-group-append" style="display:none;margin-left: 10px;">
+                                            <input placeholder="Cari Barang" class="form-control-sm" id="cari_barang"
+                                                style="width:300px" type="text" autocomplete="off" />
+                                        </span>
+                                        <span class="input-group-append" style="display: none;">
+                                            <a href="javascript:openBarang()" class="btn btn-sm btn-info"><i
+                                                    class="fa fa-search"></i> Cari Barang</a>
+                                            <input type="submit" class="hide" style="display: none;">
+                                            <a href="javascript:openJasa()" class="btn btn-sm btn-warning"><i
+                                                    class="fa fa-wrench"></i> Tambah
+                                                Jasa</a>
+                                        </span>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                    <a class="btn btn-app" onclick="openBarang()">
+                        <i class="fas fa-search"></i> F3 - Cari
+                    </a>
+                    <a class="btn btn-app">
+                        <i class="fa far fa-shopping-cart"></i> F4 - Qty
+                    </a>
+                    <a class="btn btn-app">
+                        <i class="fa far fa-save"></i> Simpan
+                    </a>
+                    <a class="btn btn-app" onclick="location.reload();">
+                        <i class="fa fa-retweet"></i> Refresh
+                    </a>
+                    <a class="btn btn-app" onclick="popupValidasi()">
+                        <i class="fas fa-check"></i> Validasi
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<div class="modal fade" id="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id="loadModal"></div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" tabindex="-1" role="dialog" id="modal-bayar">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <p>One fine body&hellip;</p>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    window.$ = window.jQuery = require('jquery');
+</script>
+<script src="/assets/js/padnum.js"></script>
+<script src="/assets/js/localdb.min.js"></script>
+<script src="/assets/js/tanggal.js"></script>
+<script src="/assets/w2ui/w2ui.min.js"></script>
+<script src="/assets/js/shortcuts.js"></script>
+<script src="/helper/mutasi/mutasi.js"></script>
+<script src="/helper/mutasi/openBarang.js"></script>
+<script src="/helper/mutasi/openCustomer.js"></script>
+<script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- <script src="/assets/js/adminlte.js"></script> -->

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>DIVA POS :: APLIKASI PENJUALAN</title>
+    <link rel="stylesheet" href="/plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="/assets/w2ui/w2ui.min.css" />
+    <link rel="stylesheet" href="/assets/css/adminlte.min.css">
+    <link rel="stylesheet" href="/assets/css/laporan.css">
+    <link rel="stylesheet" href="/plugins/toastr/toastr.min.css">
+
+    <style>
+        body {
+            background-color: #F4F6F9;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        p {
+            margin: 1px !important;
+        }
+
+        hr {
+            margin-top: 5px;
+            margin-bottom: 5px;
+            color: #000 !important;
+        }
+
+        .td {
+            border: 3px;
+        }
+
+        pre {
+            padding: 0px;
+            margin: -2px;
+            font-size: 18px
+        }
+
+        .table td, .table th {
+            padding: 0.75rem;
+            vertical-align: top;
+            border-top: 0px solid #dee2e6;
+        }
+        @media print {
+            @page {
+                margin-left: 0mm;
+                margin-top: 0mm;
+            }
+
+            pre {
+                padding: 0px;
+                margin: -2px;
+                border: none;
+                font-size: 18px
+            }
+
+        }
+        .outBox{
+            display:none;
+            border: 1px solid #ccc;
+        }
+        svg {
+            width: 38mm;
+        }
+    </style>
+</head>
+
+<body class="hold-transition layout-top-nav fixed text-sm">
+    <div class="wrapper">
+        <!-- Navbar -->
+        <nav class="main-header navbar navbar-expand-md navbar-light navbar-white ">
+            <div class="container">
+                <div class="collapse navbar-collapse order-3" id="navbarCollapse">
+                    <form id="post" class="form-inline ml-0 ml-md-3">
+                        <select name="" id="changeUkuran" style="margin-right: 10px;height: 30px;">
+                            <option value="15x33">Ukuran 15x33</option>
+                            <option value="18x50">Ukuran 18x50</option>
+                        </select>
+                        <div class="input-group input-group-sm">
+                            <input placeholder="barcode" name="kodeBarang" id="kodeBarang" type="text"
+                                class="form-control">
+                            <input placeholder="harga" name="hargaJual" id="hargaJual" type="hidden"
+                                class="form-control">
+                            <a href="javascript:openBarang()" class="btn btn-sm btn-default">Cari Barang</a>
+                        </div>
+                        <div class="input-group input-group-sm">
+                            <div class="input-group-append">
+                                <span class="btn btn-navbar">
+                                    Jumlah Baris
+                                </span>
+                            </div>
+                            <input name="jumlah" id="jumlah" style="width:80px" type="number" min="1" value=1
+                                class="form-control">
+
+                        </div>
+                        <input type="submit" name="" class="btn btn-primary btn-sm" value="Tampilkan">
+                    </form>
+
+                </div>
+                <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
+                    <li class="nav-item dropdown">
+                        <button class="btn btn-sm btn-primary" onclick="printLaporan()">Cetak</button>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="content-wrapper">
+            <div class="content-header">
+                <div class="container">
+                </div>
+            </div>
+            <div class="content">
+                <div class="">
+                    <div class="row">
+                        <div class="col-lg-9">
+                            <div class="card">
+
+                                <div class="card-header">
+                                    <h5 id="title" class="center">Cetak Barcode Ukuran 15x33</h5>
+
+                                </div>
+                                <div class="card-body">
+                                    <div class="outBox">
+                                        <div id="table"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 id="title" class="center">Pengaturan Barcode</h5>
+
+                                </div>
+                                <table class="table table-sm card-body">
+                                    <tr>
+                                        <td style="padding-left:20px">Jarak Tepi Atas(mm)</td>
+                                        <td><input onChange="showLabel()" name="marginTop" id="marginTop"
+                                                style="width:80px" type="number"  value=1 class="form-control">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-left:20px">Jarak Tepi Kiri(mm)</td>
+                                        <td><input onChange="showLabel()" name="marginLeft" id="marginLeft"
+                                                style="width:80px" type="number" value=1 class="form-control">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-left:20px">Posisi Kode Barang</td>
+                                        <td>
+                                            <select onChange="showLabel()"  name="textPosition" id="textPosition">
+                                                <option value="top">Atas</option>
+                                                <option value="bottom">Bawah</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-left:20px">Font Kode Barang</td>
+                                        <td><input onChange="showLabel()" name="fontCode" id="fontCode"
+                                                style="width:80px" type="number" min="1" value=12 class="form-control">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-left:20px">Font Harga</td>
+                                        <td><input onChange="showLabel()" name="fontSize" id="fontSize"
+                                                style="width:80px" type="number" min="1" value=23 class="form-control">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-left:20px">Tinggi Barcode</td>
+                                        <td><input onChange="showLabel()" name="barcodeHeight" id="barcodeHeight"
+                                                style="width:80px" type="number" min="1" value=33 class="form-control">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-left:20px">Tampilkan kotak</td>
+                                        <td><input  type="checkbox" onClick="boxCheck()" name="boxBorder" id="boxBorder" type="number" min=0 max="1"  value="1">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-left:20px">Tinggi kotak</td>
+                                        <td><input style="width:80px"  onChange="showLabel()" name="boxHeight" id="boxHeight" type="number" min=0   value="28">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-left:20px">Lebar kotak</td>
+                                        <td><input style="width:80px"  onChange="showLabel()" name="boxWidth" id="boxWidth" type="number" min=0   value="28">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-left:20px"></td>
+                                        <td><input onclick="saveSetting()" type="submit" class="btn btn-primary btn-sm" value="Simpan">
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        window.$ = window.jQuery = require('jquery');
+
+    </script>
+
+    <script src="/assets/js/JsBarcode.all.min.js"></script>
+    <script src="/assets/js/localdb.min.js"></script>
+    <script src="/assets/js/jQuery.print.js"></script>
+    <script src="/assets/w2ui/w2ui.min.js"></script>
+    <script src="/helper/cetak/15x33.js"></script>
+    <script src="/helper/cetak/openBarangPOS.js"></script>
+
+
+</body>
+
+</html>

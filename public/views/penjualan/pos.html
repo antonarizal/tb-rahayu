@@ -1,0 +1,272 @@
+<html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DIVA POS :: APLIKASI PENJUALAN</title>
+<link rel="stylesheet" href="/plugins/fontawesome-free/css/all.min.css">
+<link rel="stylesheet" href="/assets/css/adminlte.min.css">
+<link rel="stylesheet" href="/assets/w2ui/w2ui.min.css" />
+<style>
+    @font-face {
+        font-family: 'conthrax-sb';
+        src: url('/assets/fonts/conthrax-sb.ttf') ;
+  }
+
+    body {
+        background-color: #8caee0;
+    }
+
+    #subtotal {
+        background-color: #f9e7b1;
+        width: 100%;
+        height: 80px;
+        font-weight: bold;
+        text-align: right;
+        font-size: 50px;
+        float: right;
+        padding: 10px;
+    }
+
+    .table-header {
+        font-size: 16px;
+        font-weight: bold;
+        color: rgb(70, 69, 69);
+
+    }
+
+    #kasir_header {
+        color: rgb(10, 95, 165);
+        text-shadow: -1px 0 white, 0 3px white, 3px 0 white, 0 -1px white;
+        font-weight: 500;
+    }
+
+    #nama_toko {
+        color: rgb(238, 58, 58);
+        text-shadow: -1px 0 white, 0 3px white, 3px 0 white, 0 -1px white;
+        font-weight: 500;
+        font-family: 'conthrax-sb';
+
+    }
+
+    hr {
+        margin-top: 0px;
+        margin-bottom: 5px;
+    }
+
+    .pembayaran {
+        text-align: right;
+        font-weight: bold;
+        font-size: 25px;
+    }
+
+    .form-cart {
+        padding: 3px !important
+    }
+</style>
+
+<div class="wrapper">
+    <br>
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h2 style="float: right;" id="kasir_header"></h2>
+                            <h2 id="nama_toko"></h2>
+                            <hr>
+                            <div class="row" id="top_kasir" style="display: none;">
+                                <div class="col-md-6">
+                                    <p style="margin-left:10px">
+                                        <span style="font-size:15px;font-weight:bold;font-size: 18px;">
+                                            <span id="alamat_toko"></span><BR>
+                                            <span id="telp"></span> <span id="kota"></span>
+                                        </span>
+                                        <br>
+                                        <table class="">
+                                            <tr>
+                                                <td>NO.</td>
+                                                <td style="padding-left:10px;padding-right:10px">:</td>
+                                                <td><span id="notrx"></span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>KASIR</td>
+                                                <td style="padding-left:10px;padding-right:10px">:</td>
+                                                <td><span id="user"></span>
+                                                    <span id="tanggal"
+                                                        style="margin-left:100px;color:rgb(145, 8, 8)"></span>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </p>
+                                </div>
+                                <div class="col-md-6">
+                                    <input onfocus="this.blur()" tabIndex=-1 readonly type="text" name="total"
+                                        id="subtotal" class="form-control-lg" value="0" required autocomplete=off>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div id="grid" style="width: 100%; height: 350px;overflow:hidden"></div>
+                    <div class="" style="padding:6px">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="input-group" style="width: 100%">
+                                    <form id="inputCart">
+                                        <input placeholder="Scan barcode (F1)" class="form-control-sm" id="kode_barang"
+                                            style="width:250px" name="kode_barang" type="text" autocomplete="off" />
+                                    </form>
+
+                                    <input class="form-control-sm" id="faktur" style="width:250px;margin-left:10px"
+                                        name="faktur" type="hidden" autocomplete="off" />
+                                    <input class="form-control-sm" id="user_id" style="width:50px;margin-left:10px"
+                                        name="user_id" type="hidden" autocomplete="off" />
+                                    <form>
+
+                                        <input readonly class="form-control-sm" id="date" style="width:200px;margin-left:10px"
+                                            name="date" type="date" autocomplete="off" />
+                                        <input readonly type="hidden" id="pelanggan_id" class="form-control-sm"
+                                            style="width:50px" value="0">
+                                        <input readonly type="text" id="nama_pelanggan" class="form-control-sm"
+                                            style="width:200px;margin-left:10px" placeholder="Nama Pelanggan"> <a
+                                            href="javascript:openPelanggan()" class="btn  btn-default"><i
+                                                class="fa fa-user"></i> </a>
+                                    </form>
+                                </div>
+                                <hr>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <a class="btn btn-app">
+                        <i class="fa fa-edit"></i> F2 - Retur
+                    </a> -->
+                    <a class="btn btn-app" onclick="openBarang()">
+                        <i class="fas fa-search"></i> F3 - Barang
+                    </a>
+                    <!-- <a class="btn btn-app" onclick="openJasa()">
+                        <i class="fas fa-wrench"></i> F4 - Jasa
+                    </a> -->
+                    <!-- <a class="btn btn-app" onclick="openModal()">
+                        <i class="fas fa-print"></i> F5 - Re-Print
+                    </a>
+                    <a class="btn btn-app" onclick="reset()">
+                        <i class="fas fa-times"></i> F6 - Batal
+                    </a>
+                    <a class="btn btn-app" onclick="simpanTrx()">
+                        <i class="fas fa-save"></i> F7 - Simpan
+                    </a>
+                    <a class="btn btn-app">
+                        <i class="fas fa-download"></i> F8 - Panggil
+                    </a> -->
+                    <a class="btn btn-app" onclick="selesai()">
+                        <i class="fas fa-download"></i> F9 - Selesai
+                    </a>
+                </div>
+            </div>
+        </div>
+</div>
+</section>
+</div>
+<div class="modal fade" id="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id="loadModal"></div>
+        </div>
+    </div>
+</div>
+<div class="modal" tabindex="-1" role="dialog" id="modal-bayar">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                Pembayaran
+            </div>
+            <div>
+                <table class="table modal-body">
+                    <tr>
+                        <td style="width:200px">Sub Total</td>
+                        <td><input type="text" readonly name="subtotal" id="subtotal2" class="form-control pembayaran"
+                                value="" required autocomplete=off></td>
+                    </tr>
+                    <tr>
+                        <td>Diskon</td>
+                        <td><input type="text" name="" id="disc" onkeyup="disc(this)" class="form-control-sm pembayaran"
+                                value="0" required autocomplete=off style="width:20%"> % = <input type="text" name=""
+                                id="diskon" class="form-control-sm pembayaran" onkeyup="diskon(this)" value="0" required
+                                autocomplete=off style="width:60%;float:right"></td>
+                    </tr>
+                    <tr style="display: none;">
+                        <td>Pajak</td>
+                        <td><input type="text" name="" id="pajak" class="form-control-sm pembayaran" value="0" required
+                                autocomplete=off style="width:20%"> %</td>
+                    </tr>
+                    
+                    <td>Ongkos</td>
+                    <td><input type="text" name="" id="ongkos"
+                            class="form-control pembayaran" onkeyup="ongkos(this)"  value="0" autocomplete=off></td>
+                </tr>
+                    <tr>
+                        <td>Pembayaran</td>
+                        <td>
+                            <select name="pembayaran" class="form-control"
+                                style="margin-top:3px;margin-left:5px;padding:3px;height:30px" id="pembayaran">
+                                <option value="Cash">Cash</option>
+                                <option value="Hutang">Hutang</option>
+                            </select></td>
+                    </tr>
+                    <tr>
+                        <td>Jatuh Tempo</td>
+                        <td>
+                            
+                                <input class="form-control-sm" id="tempo" style="width:200px;margin-left:10px"
+                                    name="tempo" type="date" autocomplete="off" />
+                    </tr>
+                    <tr>
+                        <td>Grand Total</td>
+                        <td><input tabindex="-1" type="text" readonly name="" id="grandtotal"
+                                class="form-control pembayaran" value="" required autocomplete=off></td>
+                    </tr>
+                    <tr>
+                        <td>Dibayar </td>
+                        <td><input type="text" onkeyup="dibayar(this)" name="" id="dibayar"
+                                class="form-control pembayaran" value="" required autocomplete=off>
+                                </td>
+
+                    </tr>
+                    <tr>
+                        <td>Kembali</td>
+                        <td><input type="text" readonly name="" id="kembali" class="form-control pembayaran" value="0"
+                                required autocomplete=off></td>
+                    </tr>
+                    <tr>
+                        <td style="width:100%" colspan=2><button
+                            class="btn btn-sm btn-default" id="lunasi"
+                               onclick="lunasi()">(F8) Lunasi</button>
+                               <input class="btn btn-primary btn-sm  float-right" type="submit" onclick="klikBayar()"
+                                value="SIMPAN TRANSAKSI"></td>
+                    </tr>
+                </table>
+
+            </div>
+        </div>
+    </div>
+    <iframe id="ifrmPrint" src="" width="0" height="0" > </iframe>
+</div>
+<script>
+    window.$ = window.jQuery = require('jquery');
+</script>
+<script src="/assets/js/localdb.min.js"></script>
+<script src="/assets/js/padnum.js"></script>
+<script src="/assets/js/tanggal.js"></script>
+<script src="/assets/w2ui/w2ui.min.js"></script>
+<script src="/assets/js/shortcuts.js"></script>
+<script src="/helper/penjualan/pos.js"></script>
+<script src="/helper/penjualan/_cart.js"></script>
+<script src="/helper/penjualan/_notaCustom.js"></script>
+<script src="/helper/penjualan/_simpanTrx.js"></script>
+<script src="/helper/penjualan/openBarangPOS.js"></script>
+<script src="/helper/penjualan/openJasaPOS.js"></script>
+<script src="/helper/penjualan/openPelanggan.js"></script>
+<script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- <script src="/assets/js/adminlte.js"></script> -->

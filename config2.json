@@ -1,0 +1,23 @@
+{
+  "name": "APLIKASI KASIR :: DIVAPOS RETAIL",
+  "version": "1.0.1",
+  "appName": "divapos-retail",
+  "dirname": "ci4",
+  "rebrand": false,
+  "custom": false,
+  "assets": "assets",
+  "description": "Aplikasi Kasir",
+  "website": "https://exrush.com", 
+  "author": "PT. EXRUSH DIGITAL NUSANTARA",
+  "email": "",
+  "phone": "",
+  "whatsapp": "082337398270",
+  "port": 8899,
+  "base_url": 8899,
+  "server_url": "http://localhost:8899/",
+  "express_port": 3344,
+  "code": "RETC01",
+  "productUrl": "https://exrush.com/divapos-retail",
+  "serial": "91F29J4Y",
+  "key": "T8WS1-0UY41-3YIWA"
+}

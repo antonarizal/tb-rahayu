@@ -1,0 +1,77 @@
+{
+  "name": "",
+  "isOrdered": true,
+  "folders": {
+    "assets": {
+      "name": "assets",
+      "isOrdered": true,
+      "folders": {},
+      "files": {}
+    },
+    "build": {
+      "name": "build",
+      "isOrdered": true,
+      "folders": {
+        "backup": {
+          "name": "backup",
+          "isOrdered": true,
+          "folders": {},
+          "files": {}
+        },
+        "project": {
+          "name": "project",
+          "isOrdered": true,
+          "folders": {},
+          "files": {}
+        }
+      },
+      "files": {}
+    },
+    "dist": {
+      "name": "dist",
+      "isOrdered": true,
+      "folders": {},
+      "files": {}
+    },
+    "project": {
+      "name": "project",
+      "isOrdered": true,
+      "folders": {
+        "ci4": {
+          "name": "ci4",
+          "isOrdered": true,
+          "folders": {},
+          "files": {}
+        },
+        "php": {
+          "name": "php",
+          "isOrdered": true,
+          "folders": {},
+          "files": {}
+        }
+      },
+      "files": {}
+    },
+    "release": {
+      "name": "release",
+      "isOrdered": true,
+      "folders": {},
+      "files": {}
+    },
+    "script": {
+      "name": "script",
+      "isOrdered": true,
+      "folders": {},
+      "files": {}
+    },
+    "translations": {
+      "name": "translations",
+      "isOrdered": true,
+      "folders": {},
+      "files": {}
+    }
+  },
+  "files": {
+    "README": 0
+  }
+}
